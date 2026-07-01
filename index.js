@@ -261,9 +261,12 @@ client.on('interactionCreate', async interaction => {
         `;
 
         const imageBuffer = await nodeHtmlToImage({ 
-            html: htmlContent,
-            transparent: true 
-        });
+    html: htmlContent,
+    transparent: true,
+    puppeteerArgs: { 
+        args: ['--no-sandbox', '--disable-setuid-sandbox'] // 這兩行在 Docker 中是必須的
+    }
+});
         
         const attachment = new AttachmentBuilder(imageBuffer, { name: 'colored_schedule.png' });
 
@@ -377,7 +380,13 @@ client.on('interactionCreate', async interaction => {
         </html>
         `;
 
-        const imageBuffer = await nodeHtmlToImage({ html: htmlContent, transparent: true });
+        const imageBuffer = await nodeHtmlToImage({ 
+    html: htmlContent,
+    transparent: true,
+    puppeteerArgs: { 
+        args: ['--no-sandbox', '--disable-setuid-sandbox'] // 這兩行在 Docker 中是必須的
+    }
+});
         const attachment = new AttachmentBuilder(imageBuffer, { name: 'monthly.png' });
 
         await interaction.editReply({ files: [attachment] });
