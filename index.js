@@ -5,6 +5,7 @@ const { createCanvas, registerFont } = require('canvas');
 
 // 在這裡馬上註冊你的字體！
 registerFont('./font.ttf', { family: 'NotoSansTC' });
+registerFont('./font2.ttf', { family: 'NotoSansTC-bold' });
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -146,16 +147,20 @@ client.on('interactionCreate', async interaction => {
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvasW, canvasH);
 
-            ctx.fillStyle = '#bf0000'; // 紅色橫幅
+            ctx.fillStyle = '#bf3939'; // 紅色橫幅
             ctx.fillRect(0, 0, canvasW, headerH);
-            
+
             ctx.fillStyle = '#ffffff';
             ctx.textAlign = 'center';
-            ctx.font = 'bold 36px "NotoSansTC';
-            ctx.fillText('Rakuten Girls 站位總表', canvasW / 2, 55);
-            ctx.font = 'bold 22px "NotoSansTC';
+
+            // ✅ 修正：補上雙引號，並將 Y 軸從 55 移到 70，避免大字頂部被切掉
+            ctx.font = 'bold 50px "NotoSansTC-bold"';
+            ctx.fillText('Rakuten Girls 站位總表', canvasW / 2, 70);
+
+            // ✅ 修正：這裡也補上雙引號，並將 Y 軸從 100 稍微移到 115
+            ctx.font = 'bold 22px "NotoSansTC"';
             ctx.globalAlpha = 0.9;
-            ctx.fillText(`📅 日期：${matchedDate}`, canvasW / 2, 100);
+            ctx.fillText(`日期：${matchedDate}`, canvasW / 2, 115);
             ctx.globalAlpha = 1.0;
 
             // 🌟 3. 畫女孩卡片
@@ -172,13 +177,13 @@ client.on('interactionCreate', async interaction => {
                 drawRoundRect(ctx, x, y, cardW, cardH, 12, true, true);
 
                 // 背號與姓名
-                ctx.fillStyle = '#a3a6aa';
-                ctx.font = 'bold 20px monospace';
+                ctx.fillStyle = '#b3133e';
+                ctx.font = '20px "NotoSansTC-Bold"';
                 ctx.textAlign = 'left';
                 ctx.fillText(String(getSafeValue(s, '背號')).padStart(2, '0'), x + 15, y + 50);
 
                 ctx.fillStyle = '#000000';
-                ctx.font = 'bold 26px "NotoSansTC';
+                ctx.font = '20px "NotoSansTC-Bold"';
                 ctx.fillText(getSafeValue(s, '姓名'), x + 55, y + 50);
 
                 // 站位區域
@@ -204,13 +209,13 @@ client.on('interactionCreate', async interaction => {
                     // 小標籤 (如: 上半)
                     ctx.textAlign = 'center';
                     ctx.fillStyle = theme.color;
-                    ctx.font = 'bold 13px "NotoSansTC';
+                    ctx.font = '18px "NotoSansTC-Bold"';
                     ctx.globalAlpha = 0.8;
                     ctx.fillText(z.l, startX + 42.5, y + 33);
                     
                     // 站位文字 (如: 東)
                     ctx.globalAlpha = 1.0;
-                    ctx.font = 'bold 22px "NotoSansTC';
+                    ctx.font = '16px "NotoSansTC-Bold"';
                     ctx.fillText(displayText, startX + 42.5, y + 57);
 
                     startX += 95;
@@ -318,30 +323,32 @@ client.on('interactionCreate', async interaction => {
                 ctx.fillStyle = '#1e1f22';
                 ctx.fillRect(0, 0, canvasW, canvasH);
                 
-                // 標題
+                // 標題 (40px)
                 ctx.fillStyle = '#ffffff';
                 ctx.textAlign = 'center';
-                ctx.font = 'bold 30px "NotoSansTC';
-                ctx.fillText('📅 本月班表', canvasW / 2, padding + 40);
+                ctx.font = 'bold 40px "NotoSansTC"';
+                ctx.fillText('本月班表', canvasW / 2, padding + 40);
 
                 // 畫表格標題列 (紅底)
                 const tableY = padding + 80;
                 ctx.fillStyle = '#bf0000';
                 ctx.fillRect(padding, tableY, tableW, cellH);
-                
+
                 ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 16px "NotoSansTC';
+                // ✅ 修正：補上後面的雙引號 (16px)
+                ctx.font = 'bold 16px "NotoSansTC-bold"';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                
+
                 let currentX = padding;
                 headers.forEach((h, i) => {
                     ctx.fillText(h, currentX + colWidths[i] / 2, tableY + cellH / 2);
                     currentX += colWidths[i];
                 });
 
-                // 畫資料列
-                ctx.font = '14px "NotoSansTC';
+                // 畫資料列 (14px)
+                // ✅ 修正：補上後面的雙引號
+                ctx.font = '14px "NotoSansTC-bold"';
                 monthlyData.forEach((row, rowIndex) => {
                     const rowY = tableY + cellH + rowIndex * cellH;
                     currentX = padding;
