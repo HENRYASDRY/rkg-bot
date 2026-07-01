@@ -1,7 +1,10 @@
 require('dotenv').config();
 const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const axios = require('axios');
-const { createCanvas } = require('canvas'); // 🌟 引入 Canvas
+const { createCanvas, registerFont } = require('canvas');
+
+// 在這裡馬上註冊你的字體！
+registerFont('./font.ttf', { family: 'NotoSansTC' });
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -148,9 +151,9 @@ client.on('interactionCreate', async interaction => {
             
             ctx.fillStyle = '#ffffff';
             ctx.textAlign = 'center';
-            ctx.font = 'bold 36px "Microsoft JhengHei", sans-serif';
+            ctx.font = 'bold 36px "NotoSansTC';
             ctx.fillText('Rakuten Girls 站位總表', canvasW / 2, 55);
-            ctx.font = 'bold 22px "Microsoft JhengHei", sans-serif';
+            ctx.font = 'bold 22px "NotoSansTC';
             ctx.globalAlpha = 0.9;
             ctx.fillText(`📅 日期：${matchedDate}`, canvasW / 2, 100);
             ctx.globalAlpha = 1.0;
@@ -175,7 +178,7 @@ client.on('interactionCreate', async interaction => {
                 ctx.fillText(String(getSafeValue(s, '背號')).padStart(2, '0'), x + 15, y + 50);
 
                 ctx.fillStyle = '#000000';
-                ctx.font = 'bold 26px "Microsoft JhengHei", sans-serif';
+                ctx.font = 'bold 26px "NotoSansTC';
                 ctx.fillText(getSafeValue(s, '姓名'), x + 55, y + 50);
 
                 // 站位區域
@@ -201,13 +204,13 @@ client.on('interactionCreate', async interaction => {
                     // 小標籤 (如: 上半)
                     ctx.textAlign = 'center';
                     ctx.fillStyle = theme.color;
-                    ctx.font = 'bold 13px "Microsoft JhengHei", sans-serif';
+                    ctx.font = 'bold 13px "NotoSansTC';
                     ctx.globalAlpha = 0.8;
                     ctx.fillText(z.l, startX + 42.5, y + 33);
                     
                     // 站位文字 (如: 東)
                     ctx.globalAlpha = 1.0;
-                    ctx.font = 'bold 22px "Microsoft JhengHei", sans-serif';
+                    ctx.font = 'bold 22px "NotoSansTC';
                     ctx.fillText(displayText, startX + 42.5, y + 57);
 
                     startX += 95;
@@ -318,7 +321,7 @@ client.on('interactionCreate', async interaction => {
                 // 標題
                 ctx.fillStyle = '#ffffff';
                 ctx.textAlign = 'center';
-                ctx.font = 'bold 30px "Microsoft JhengHei", sans-serif';
+                ctx.font = 'bold 30px "NotoSansTC';
                 ctx.fillText('📅 本月班表', canvasW / 2, padding + 40);
 
                 // 畫表格標題列 (紅底)
@@ -327,7 +330,7 @@ client.on('interactionCreate', async interaction => {
                 ctx.fillRect(padding, tableY, tableW, cellH);
                 
                 ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 16px "Microsoft JhengHei", sans-serif';
+                ctx.font = 'bold 16px "NotoSansTC';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 
@@ -338,7 +341,7 @@ client.on('interactionCreate', async interaction => {
                 });
 
                 // 畫資料列
-                ctx.font = '14px "Microsoft JhengHei", sans-serif';
+                ctx.font = '14px "NotoSansTC';
                 monthlyData.forEach((row, rowIndex) => {
                     const rowY = tableY + cellH + rowIndex * cellH;
                     currentX = padding;
